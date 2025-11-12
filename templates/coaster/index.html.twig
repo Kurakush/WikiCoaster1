@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Liste des montagnes russes</h1>
+    <div class="divider"></div>
+    <div class="overflow-x-auto">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Vitesse Max</th>
+                    <th>Longueur</th>
+                    <th>Hauteur max</th>
+                    <th>En fonctionnement</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities %}
+                <tr>
+                    <td><strong>{{ entity.name}}</strong></td>
+                    <td>{{entity.maxSpeed}}</td>
+                    <td>{{entity.length}}</td>
+                    <td>{{entity.maxHeight}}</td>
+                    <td>{{ entity.operating ? '🟢​' : '​🔴​' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

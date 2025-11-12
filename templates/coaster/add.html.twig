@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ajouter une Coaster</h1>
+
+    {{ form_start(coasterForm) }}
+        {{ form_widget(coasterForm) }}
+        <button type="submit" class="btn btn-primary">Ajouter une Coaster</button>
+    {{ form_end(coasterForm) }}
+{% endblock %}
