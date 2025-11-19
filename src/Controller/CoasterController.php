@@ -9,10 +9,22 @@ use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Coaster;
 use App\Form\CoasterType;
+use App\Repository\CoasterRepository;
 
 
 class CoasterController extends AbstractController
-{
+{   
+    #[Route(path: '/coaster')]
+    public function index(CoasterRepository $coasterRepository): Response {
+        $entities = $coasterRepository->findAll();
+
+        return $this->render('coaster/index.html.twig', [
+            'controller_name' => 'CoasterController',
+            'coasters' => $entities, // envoie les entités à la vue
+        ]);
+    }
+
+
     #[Route(path: '/coaster/add')]
     public function add(EntityManagerInterface $em, Request $request):Response
     {
