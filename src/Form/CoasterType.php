@@ -4,9 +4,9 @@ namespace App\Form;
 
 use App\Entity\Coaster;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class CoasterType extends AbstractType
 {
@@ -14,24 +14,28 @@ class CoasterType extends AbstractType
     {
         $builder
             ->add('name', options: [
-                'label' => 'Nom de la montagne russe'])
+                'label' => 'Nom de la montagne russe'
+            ])
             ->add('maxSpeed', options: [
-                'label' => 'Vitesse max (km/h)'])
+                'label' => 'Vitesse max (km/h)'
+            ])
             ->add('length', options: [
-                'label' => 'Longueur (m)'])
+                'label' => 'Longueur (m)'
+            ])
             ->add('maxHeight', options: [
-                'label' => 'Hauteur max (m)'])
+                'label' => 'Hauteur max (m)'
+            ])
             ->add('operating', ChoiceType::class, options: [
                 'label' => 'En service ?',
-                'choices' => [ //choix disponibles
+                'choices'  => [ //choix disponibles
                     'Oui' => true,
                     'Non' => false,
- 
-            ],
+
+                ],
                 'expanded' => true, //affiche sous forme de boutons radio
-        ])
-    ;
-}
+            ])
+        ;
+    }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -40,4 +44,3 @@ class CoasterType extends AbstractType
         ]);
     }
 }
-

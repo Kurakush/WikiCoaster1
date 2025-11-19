@@ -1,31 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Liste des montagnes russes</h1>
-    <div class="divider"></div>
-    <div class="overflow-x-auto">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Vitesse Max</th>
-                    <th>Longueur</th>
-                    <th>Hauteur max</th>
-                    <th>En fonctionnement</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for entity in entities %}
-                <tr>
-                    <td><strong>{{ entity.name}}</strong></td>
-                    <td>{{entity.maxSpeed}}</td>
-                    <td>{{entity.length}}</td>
-                    <td>{{entity.maxHeight}}</td>
-                    <td>{{ entity.operating ? '🟢​' : '​🔴​' }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-{% endblock %}
+<div class="flex justify-between"></div>
+<h1>Liste des montagnes russes</h1>
+<a href="{{path('app_coaster_add')}}" class="btn btn-primary"><i class="bi bi-arrow-down-right-circle"></i>Ajouter une montagne russe</a>
+
+<div class="divider"></div>
+<div class="overflow-x-auto"> </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Vitesse max</th>
+                <th>Longueur (m)</th>
+                <th>Hauteur max</th>
+                <th>En fonctionnement</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+            <tr>
+                <td><strong>{{ entity.name }} </strong></td>
+                <td>{{ entity.maxSpeed }}</td>
+                <td>{{ entity.length }}</td> 
+                <td>{{ entity.maxHeight }}</td>
+                <td>{{ entity.operating ? '💚​' : '❤️​' }}</td>
+                <td> 
+                    <a href="{{ path('app_coaster_edit', {'id': entity.id}) }}" class="btn btn-accent btn-sm"><i class="bi bi-pencil-square"></i></a>
+                     <a href="{{ path('app_coaster_remove', {'id': entity.id}) }}" class="btn btn-primary btn-sm"><i class="bi bi-trash"></i></a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+       
+    </table>
+</div>
+
+{% endblock %} 
