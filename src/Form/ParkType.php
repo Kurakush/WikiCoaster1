@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\Park;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class ParkType extends AbstractType
 {
@@ -13,7 +15,15 @@ class ParkType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('country')
+            ->add('country', ChoiceType::class, [
+                'choices'  => [
+                    'France' => 'FR',
+                    'USA' => 'USA',
+                    'Espagne' => 'ES',
+                    'Italie' => 'IT',
+                    'Allemagne' => 'ALL',
+                ],
+            ])
             ->add('openingYear')
         ;
     }

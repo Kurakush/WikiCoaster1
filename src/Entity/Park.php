@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ParkRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ParkRepository::class)]
@@ -21,6 +23,17 @@ class Park
 
     #[ORM\Column(nullable: true)]
     private ?int $openingYear = null;
+
+    /**
+     * @var Collection<int, Coaster>
+     */
+    #[ORM\OneToMany(targetEntity: Coaster::class, mappedBy: 'park')]
+    private Collection $coasters;
+
+    public function __construct()
+    {
+        $this->coasters = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -59,6 +72,36 @@ class Park
     public function setOpeningYear(?int $openingYear): static
     {
         $this->openingYear = $openingYear;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Coaster>
+     */
+    public function getCoasters(): Collection
+    {
+        return $this->coasters;
+    }
+
+    public function addCoaster(Coaster $coaster): static
+    {
+        if (!$this->coasters->contains($coaster)) {
+            $this->coasters->add($coaster);
+            $coaster->setPark($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCoaster(Coaster $coaster): static
+    {
+        if ($this->coasters->removeElement($coaster)) {
+            // set the owning side to null (unless already changed)
+            if ($coaster->getPark() === $this) {
+                $coaster->setPark(null);
+            }
+        }
 
         return $this;
     }
