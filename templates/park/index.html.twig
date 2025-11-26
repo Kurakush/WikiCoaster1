@@ -12,6 +12,7 @@
                 <th>Name</th>
                 <th>Country</th>
                 <th>OpeningYear</th>
+                <th>Nombre de coasters</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                 <td>{{ park.name }}</td>
                 <td>{{ park.country }}</td>
                 <td>{{ park.openingYear }}</td>
+                <td>{{ park.coasters.count }}</td>
                 <td>
                     <a href="{{ path('app_park_show', {'id': park.id}) }}">show</a>
                     <a href="{{ path('app_park_edit', {'id': park.id}) }}">edit</a>

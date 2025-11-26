@@ -15,6 +15,7 @@
                 <th>Longueur (m)</th>
                 <th>Hauteur max</th>
                 <th>En fonctionnement</th>
+                <th>Parc</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -26,6 +27,7 @@
                 <td>{{ entity.length }}</td> 
                 <td>{{ entity.maxHeight }}</td>
                 <td>{{ entity.operating ? '💚​' : '❤️​' }}</td>
+                <td>{{ entity.park.name }}</td>
                 <td> 
                     <a href="{{ path('app_coaster_edit', {'id': entity.id}) }}" class="btn btn-accent btn-sm"><i class="bi bi-pencil-square"></i></a>
                      <a href="{{ path('app_coaster_remove', {'id': entity.id}) }}" class="btn btn-primary btn-sm"><i class="bi bi-trash"></i></a>
