@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Coaster;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -9,6 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Park;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+
 
 class CoasterType extends AbstractType
 {
@@ -40,8 +44,17 @@ class CoasterType extends AbstractType
                 'class' => Park::class,
                 'required' => false,
                 'placeholder' => 'Aucun parc',
-                'help' => 'Le parc auquel cette montagne russe appartient',
+                'help' => 'Le parc auquel ce coaster appartient',
                 'group_by' => 'country', // Groupe les parcs par pays
+            ])
+            ->add('categories', EntityType::class, [
+                'class' => Category::class,
+                'multiple' => true,
+                'expanded' => true, // Case à cocher
+                'query_builder' => function (EntityRepository $er) : QueryBuilder {
+                    return $er ->createQueryBuilder('c')
+                        ->orderBy('c.name','ASC');
+                },
             ])
         ;
     }
