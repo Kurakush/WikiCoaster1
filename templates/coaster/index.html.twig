@@ -11,6 +11,7 @@
         <thead>
             <tr>
                 <th>Nom</th>
+                <th>Categories</th>
                 <th>Vitesse max</th>
                 <th>Longueur (m)</th>
                 <th>Hauteur max</th>
@@ -23,6 +24,11 @@
             {% for entity in entities %}
             <tr>
                 <td><strong>{{ entity.name }} </strong></td>
+                <td> 
+                    {% for category in entity.categories %}
+                    <span class="badge"> {{category.name}}</span>
+                    {% endfor %}
+                </td>
                 <td>{{ entity.maxSpeed }}</td>
                 <td>{{ entity.length }}</td> 
                 <td>{{ entity.maxHeight }}</td>
