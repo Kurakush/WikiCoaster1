@@ -4,24 +4,51 @@ namespace App\Controller;
 
 use App\Entity\Coaster;
 use App\Form\CoasterType;
+use App\Repository\CategoryRepository;
 use App\Repository\CoasterRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Repository\ParkRepository;
+
 
 class CoasterController extends AbstractController
 {
     #[Route(path: '/coaster')]
-    public function index(CoasterRepository $coasterRepository): Response {
+    public function index(CoasterRepository $coasterRepository, 
+    ParkRepository $parkRepository, 
+    CategoryRepository $categoryRepository,
+    Request $request,
+    ): Response {
 
         //récupère toutes les entités Coaster de la BD
-        $entities = $coasterRepository->findAll();
+        // $entities = $coasterRepository->findAll();
+        $parks = $parkRepository->findAll();
+        $categories = $categoryRepository->findAll();
+
+        $parkId = (int) $request->query->get('park');
+        $categoryId = (int) $request->query->get('category');
+        $search = (string) $request->query->get('search','');
+
+        $count = 20;
+        $page = (int) $request->query->get('p',1);
+
+        $entities = $coasterRepository->findFiltered($parkId, $categoryId, $search, $count, $page);
+        $pageCount = max(ceil($entities->count() / $count), 1);
 
         return $this->render('coaster/index.html.twig', [
             'controller_name' => 'CoasterController',
             'entities' => $entities, //envoie les entités à la vue
+            'parks' => $parks,
+            'categories' => $categories,
+            'parkId' => $parkId,
+            'categoryId' => $categoryId,
+            'search' => $search,
+            'pageCount' => $pageCount, // Nombre de pages
+            'page' => $page, // Page courante
+
         ]);
     }
 

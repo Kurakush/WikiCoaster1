@@ -6,6 +6,27 @@
 <a href="{{path('app_coaster_add')}}" class="btn btn-primary"><i class="bi bi-arrow-down-right-circle"></i>Ajouter une montagne russe</a>
 
 <div class="divider"></div>
+
+<form action ="" method="get" class="flex py-2">
+    <select name="park" class="select">
+        <option value="">Tous les parcs</option>
+        {% for park in parks %}
+        <option value="{{ park.id }}" {{ parkId == park.id ? 'selected':''}}>{{ park.name}}</option>
+        {% endfor %}
+    </select>
+
+    <select name="category" class="select">
+        <option value="">Toutes les catégories</option>
+        {% for category in categories %}
+        <option value="{{ category.id }} " {{ categoryId == category.id ? 'selected':''}}>{{ category.name}}</option>
+        {% endfor %}
+    </select>
+
+    <input type="search" name="search" class="input ms-2" placeholder="Rechercher" value="{{ search }}">
+
+    <button type="submit" class="btn btn-default ms-2"><i class="bi bi-funnel"></i>Filtrer</button>
+</form>
+
 <div class="overflow-x-auto"> </div>
     <table class="table">
         <thead>
@@ -45,5 +66,12 @@
        
     </table>
 </div>
+
+<div class="flex justify-between">
+    {% include "utils/_pagination.html.twig" with {'route' : 'app_coaster_index'} %}
+    <div>{{ entities.count }} coaster(s)</div>
+</div>
+
+
 
 {% endblock %} 
